@@ -6,7 +6,7 @@
     <div class="col">
       <table class="table table-striped table-hover">
         <div class="d-flex justify-content-end p-4 ">
-          {{-- <a class="btn btn-primary btn-lg" href="{{ route('admin.project.create') }}" > Add new Comic</a>   --}}
+           <a class="btn btn-primary btn-lg" href="{{ route('admin.projects.create') }}" > Add new Project</a>   
         </div>
           <thead class=" table-dark text-light font-semibold">
             <tr>
