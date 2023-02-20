@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\project as ModelsProject;
+use App\Models\Project as Project;
 use Faker\Generator as Faker;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
-use SebastianBergmann\CodeCoverage\Report\Xml\Project;
+
 
 class ProjectSeeder extends Seeder
 {
@@ -19,7 +19,7 @@ class ProjectSeeder extends Seeder
     public function run(Faker $faker)
     {
         for ($i=0; $i < 25; $i++) { 
-            $newProject = new ModelsProject();
+            $newProject = new Project();
             $newProject->title = $faker->unique()->realTextBetween(5,10);
             $newProject->author =$faker->realTextBetween(3,10);
             $newProject->slug = Str::slug($newProject->title);

@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController as DashboardController ;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Models\project;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +23,7 @@ Route::get('/', function () {
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'] )->name('dashboard');
+    Route::resource('/projects', AdminProjectController::class);
 });
 
 Route::middleware('auth')->group(function () {
