@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $projects = Project::paginate(25);
+        $projects = Project::paginate(5);
         return view('guests.postProjects.index', compact('projects') );
     }
 }
