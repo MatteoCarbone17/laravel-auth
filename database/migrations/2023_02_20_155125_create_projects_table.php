@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('author',50);
             $table->string('slug',150);
             $table->text('content');
-            $table->dateTime('project_date_start');
-            $table->dateTime('project_date_end');
+            $table->date('project_date_start');
+            $table->date('project_date_end');
             $table->timestamps();
         });
     }

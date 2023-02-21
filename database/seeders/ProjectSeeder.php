@@ -18,14 +18,14 @@ class ProjectSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for ($i=0; $i < 25; $i++) { 
+        for ($i=0; $i < 100; $i++) { 
             $newProject = new Project();
             $newProject->title = $faker->unique()->realTextBetween(5,10);
             $newProject->author =$faker->realTextBetween(3,10);
             $newProject->slug = Str::slug($newProject->title);
             $newProject->content =$faker->realTextBetween(500,900);
-            $newProject->project_date_start =$faker->DateTimeThisYear();
-            $newProject->project_date_end =$faker->DateTimeThisYear();
+            $newProject->project_date_start =$faker->date();
+            $newProject->project_date_end =$faker->date();
             $newProject->save();
         }
     }

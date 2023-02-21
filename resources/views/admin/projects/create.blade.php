@@ -14,10 +14,12 @@
                 <textarea name="content" id="" cols="140" rows="10"></textarea>
               </div>
               <div class="mb-3">
-                <label for="date_start" class="form-label">Project Start</label>
+                <label for="date_start" class="form-label">Project Date Start</label>
                 <input type="date" name="project_date_start" class="form-control" id="project_date_start">
               </div>
-              {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-success">Save Project</button>
             </div>
         </form>
     </div>

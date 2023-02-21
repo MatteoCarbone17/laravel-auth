@@ -27,13 +27,13 @@
               <td>{{ $project->project_date_end }}</td>
               <td>
                 <a class="btn btn-success"  href="{{ route('admin.projects.show' , $project->id) }}">Show</a>
-                 {{-- <a class="btn btn-warning"  href="{{ route('admin.project.edit' ,  $project->id) }}" >Edit</a> --}}
+                 <a class="btn btn-warning"  href="{{ route('admin.projects.edit' ,  $project->id) }}" >Edit</a>
                  {{-- <form class="d-inline" action="{{ route('products.destroy' , $product->id) }}" method="POST" >
                   @csrf
                   @method('DELETE')
-                  <button class="btn btn-danger" >Delete</button>
+                  <button class="btn btn-danger" >Delete</button> --}}
                   
-                </form> --}}
+                </form> 
               </td>
             </tr>
             @endforeach
