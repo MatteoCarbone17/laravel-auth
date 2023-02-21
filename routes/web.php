@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController as DashboardController ;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Guest\PostController as GuestPostController;
 use App\Models\project;
 
 /*
@@ -17,9 +18,7 @@ use App\Models\project;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[GuestPostController::class, 'index'])->name('guests.index');
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'] )->name('dashboard');
