@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -28,7 +29,7 @@ class ProjectController extends Controller
      */
     public function create(project $project)
     {
-        return view('admin.projects.create');
+        return view('admin.projects.create', compact('project'));
     }
 
     /**
@@ -86,9 +87,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Project $project)
     {
-       
+       return view('admin.projects.edit',compact('project') );
     }
 
     /**
@@ -98,9 +99,28 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        $data = $request->validate([
+            
+            'title'=> ['required', 'min:5','max:150'],
+            'author'=> 'min:3|max:50',
+            'content'=> 'required|min:3|max:1600',
+            'project_date_start'=>'required',
+        ],[
+            'title.required'=>'Titolo obbligatorio',
+            'title.min' => 'Minimo 5 caratteri' ,
+            'title.max' => 'Limite massimo 50 caratteri' ,
+            'author.min' => 'Minimo 3 caratteri' ,
+            'author.max' => 'Limite massimo 50 caratteri' ,
+            'content.required'=>'Contenuto obbligatorio',
+            'content.min' => 'Minimo 3 caratteri' ,
+            'content.max' => 'Limite massimo 1660 caratteri' ,
+            'project_date_start.required'=>'Data inizio obbligatoria',
+        ]); 
+        
+        $project->update($data);
+        return redirect()->route('admin.projects.show',compact('project'));
     }
 
     /**
@@ -109,8 +129,11 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        //
+        $project->delete();
+        return redirect()->route('admin.projects.index')->with('message', "Project \" $project->title \" has been deleted")->with('classMessage', "-danger");
     }
+    
 }
+
