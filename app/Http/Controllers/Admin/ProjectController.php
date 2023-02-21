@@ -17,7 +17,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::simplePaginate(50);
+        $projects = Project::simplePaginate(1000);
         return view('admin.projects.index', compact('projects') );
     }
 
@@ -28,7 +28,7 @@ class ProjectController extends Controller
      */
     public function create(project $project)
     {
-        return view('admin.projects.create', compact('project'));
+        return view('admin.projects.create');
     }
 
     /**
@@ -39,32 +39,34 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-
-        //  dd($request->all());
-       $data = $request->validate([
-
-        'title'=> 'required|unique:projects|min:5|max:150',
-        'author'=> 'min:3|max:50',
-        'content'=> 'required|min:3|max:1600',
-        'date_start'=>'required',
-       ],[
-        'title.required'=>'Titolo obbligatorio',
-        'title.min' => 'Minimo 3 caratteri' ,
-        'title.max' => 'Limite massimo 50 caratteri' ,
-        'author.min' => 'Minimo 3 caratteri' ,
-        'author.max' => 'Limite massimo 50 caratteri' ,
-        'content.required'=>'Contenuto obbligatorio',
-        'content.min' => 'Minimo 3 caratteri' ,
-        'content.max' => 'Limite massimo 1660 caratteri' ,
-       ]); 
-
-       $data['author']=Auth::user()->name;
-       $data['slug']=Str::slug($data['title']);
-       $newProject = new Project();
-       $newProject->fill($data);
-       $newProject->save();
-       return redirect()->route('admin.projects.show',$newProject->id)->with('message', "Project $newProject->title has been created");
-
+        
+        // dd($request->all());
+        $data = $request->validate([
+            
+            'title'=> 'required|min:5|max:150',
+            'author'=> 'min:3|max:50',
+            'content'=> 'required|min:3|max:1600',
+            'project_date_start'=>'required',
+        ],[
+            'title.required'=>'Titolo obbligatorio',
+            'title.min' => 'Minimo 5 caratteri' ,
+            'title.max' => 'Limite massimo 50 caratteri' ,
+            'author.min' => 'Minimo 3 caratteri' ,
+            'author.max' => 'Limite massimo 50 caratteri' ,
+            'content.required'=>'Contenuto obbligatorio',
+            'content.min' => 'Minimo 3 caratteri' ,
+            'content.max' => 'Limite massimo 1660 caratteri' ,
+            'project_date_start.required'=>'Data inizio obbligatoria',
+        ]); 
+        
+         $data['author']=Auth::user()->name;
+         $data['slug']=Str::slug($data['title']);
+        //  $data['project_date_end']= ($data['project_date_start']);
+        $newProject = new Project();
+        $newProject->fill($data);
+        $newProject->save();
+        return redirect()->route('admin.projects.show',$newProject->id)->with('message', "Project $newProject->title has been created");
+        
     }
 
     /**

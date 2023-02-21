@@ -14,7 +14,6 @@ class project extends Model
         'slug',
         'content',
         'project_date_start',
-        'project_date_end',
-
+        'project_date_end'
     ];
 }
