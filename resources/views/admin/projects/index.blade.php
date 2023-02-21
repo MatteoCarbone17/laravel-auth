@@ -3,19 +3,14 @@
 @section('content')
 <div class="container">
   <div class="row">
-  </div>
-  <div class="row">
     <div class="col">
       <table class="table table-striped table-hover">
-        <div class="d-flex align-items-center m-4">
+        <div class=" m-4">
           @if (session('message'))
           <div class=" alert alert{{session('classMessage')}}">
             {{ (session('message')) }}
           </div>
           @endif
-          <div class="mx-auto">
-            <a class="btn btn-primary btn-lg" href="{{ route('admin.projects.create') }}"> Add new Project</a>   
-          </div>
         </div>
         <thead class=" table-dark text-light font-semibold">
             <tr>
@@ -23,7 +18,8 @@
               <th scope="col">Title</th>
               <th scope="col">Project date start</th>
               <th scope="col">Project date end</th>
-              <th scope="col">Actions</th>
+              <th scope="col" >Actions : <a class="mx-3 btn btn-primary btn-sm" href="{{ route('admin.projects.create') }}"> Add new Project</a> </th>
+             
             </tr>
         </thead>
         <tbody>
@@ -48,7 +44,11 @@
             @endforeach
         </tbody>
       </table>
-
+    </div>
+    <div class="row mt-2 mb-4">
+      <div class="col">
+        {{ $projects->links()}}
+      </div>
     </div>
   </div>
 </div>
