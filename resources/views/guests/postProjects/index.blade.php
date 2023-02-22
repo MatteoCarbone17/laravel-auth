@@ -5,8 +5,8 @@
     @foreach ($projects as $project)
     <div class="row p-3">
         <div class="col">
-            <div class="card p-1 border-5 ">
-                <div class="card-header d-flex  bg-success text-light justify-content-center p-3">
+            <div class="card p-2  rounded-4 ">
+                <div class="card-header d-flex rounded-4 bg-success text-light justify-content-center p-3">
                     <span>
                         @if (isset(Auth::user()['name']))
                         <i class="fa-solid fa-envelopes-bulk"></i>
@@ -15,17 +15,17 @@
                         @endif
                     </span>
                     @isset(Auth::user()['name'])
-                    <p>
+                    <p class="ms-auto">
                         <a class="dropdown-item" href="{{ url('profile') }}"> {{ Auth::user()['name'] }}</a>
                     </p>
                     @endisset
                 </div>
-                <div class="card-body text-center">
+                <div class="card-body rounded-4  text-center">
                     <h5 class="card-title">{{ $project->title }}</h5>
                     <p>
                         Author :  {{ $project->author }}
                     </p>
-                    <p class="card-text font-medium p-3 ">{{ $project->content }}</p>
+                    <p class="card-text rounded-4  font-medium p-3 ">{{ $project->content }}</p>
                     <div class="card-footer p-2">
                         <span class="d-block">Data inizio : {{ $project->project_date_start }} </span>
                         @if (isset($project->project_date_end))

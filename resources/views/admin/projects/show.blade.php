@@ -15,8 +15,8 @@
   </div>
   <div class="row">
     <div class="col">
-      <div class="card p-5">
-        <div class="card-header d-flex  bg-success text-light justify-content-between p-3">
+      <div class="card  rounded-4 p-5">
+        <div class="card-header d-flex  rounded-4 bg-success text-light justify-content-between p-3">
           <p>
               Author :  {{ $project->author }}
           </p>
@@ -27,10 +27,10 @@
             <a class="dropdown-item" href="{{ url('profile') }}"> {{ Auth::user()['name'] }}</a>
           </p>
       </div>
-        <div class="card-body text-center">
+        <div class="card-body  rounded-4 text-center">
           <h5 class="card-title">{{ $project->title }}</h5>
           <p class="card-text p-3">{{ $project->content }}</p>
-          <div class="card-footer p-3">
+          <div class="card-footer  rounded-4 p-3">
                 <span class="d-block">Data inizio : {{ $project->project_date_start }} </span>
                 @if (isset($project->project_date_end))
                     <p> Data fine: {{ $project->project_date_end }}</p>
