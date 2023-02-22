@@ -9,25 +9,35 @@
             @method($method)
             @if ($errors->any())
             <div class="alert alert-danger mt-3">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>
-                        {{ $error }}
-                    </li>
-                    @endforeach
-                </ul>
+             <p class="fs-5"><i class="fa-solid fa-circle-exclamation"></i> Check Errors </p>
             </div>
             @endif
             <div class="mb-3 mt-3">
                 <label for="title" class="form-label font-weight-bold">Project  Title</label>
-                <input type="text" name="title" class="form-control" id="title" value="{{ old('title') ??  $project->title }}" >
+                <input type="text" name="title" class="form-control   @error('title') is-invalid @enderror " id="title" value="{{ old('title') ??  $project->title }}" >
+                @error('title')
+                <div class="invalid-feedback">
+                  <p><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</p> 
+                </div>
+                @enderror
               <div class="mb-3 mt-3">
                 <label for="content" class="form-label d-block">Project Content</label>
-                <textarea name="content" id="" cols="140" rows="10">{{old('content') ?? $project->content }} </textarea>
+                <textarea name="content" id="" cols="140" class="  @error('content') is-invalid @enderror "  rows="10">{{old('content') ?? $project->content }} </textarea>
+                @error('content')
+                <div class="invalid-feedback">
+                  <p><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</p> 
+                </div>
+                @enderror
               </div>
               <div class="mb-3 mt-3">
                 <label for="date_start" class="form-label">Project Date Start</label>
-                <input type="date" name="project_date_start" class="form-control" id="project_date_start" value="{{old('project_date_start') ?? $project->project_date_start }}" >
+                <input type="date" name="project_date_start" class="form-control   @error('project_date_start') is-invalid @enderror " id="project_date_start" value="{{old('project_date_start') ?? $project->project_date_start }}" >
+                @error('project_date_start')
+                <div class="invalid-feedback">
+                  <p><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</p> 
+                </div>
+                @enderror
+
               </div>
               <div class="mb-3 mt-3">
                 <label for="date_end" class="form-label">Project Date End</label>
