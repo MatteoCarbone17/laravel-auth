@@ -13,9 +13,11 @@
                     <span>
                         <i class="fa-solid fa-envelopes-bulk"></i>
                     </span>
+                    @isset(Auth::user()['name'])
                     <p>
                        User:  {{ Auth::user()['name'] }}
                     </p>
+                    @endisset
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ $project->title }}</h5>
