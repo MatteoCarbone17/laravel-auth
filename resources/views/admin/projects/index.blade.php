@@ -33,7 +33,7 @@
               <td>
                 <a class="btn btn-success"  href="{{ route('admin.projects.show' , $project->id) }}"><i class="fa-solid fa-eye"></i> </a>
                 <a class="btn btn-warning"  href="{{ route('admin.projects.edit' ,  $project->id) }}" ><i class="fa-solid fa-edit"></i> </a>
-               <form class="d-inline-block" action="{{ route('admin.projects.destroy' , $project->id) }}" method="POST" >
+               <form class="d-inline-block delete double-confirm" action="{{ route('admin.projects.destroy' , $project->id) }}" method="POST" >
                   @csrf
                   @method('DELETE')
                   <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button> 
@@ -51,4 +51,7 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+    @vite('resources/js/deleteButton.js')
 @endsection
