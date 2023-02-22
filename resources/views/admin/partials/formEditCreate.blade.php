@@ -7,11 +7,11 @@
         <form action="{{ route($routeName, $project) }}" method="POST" >
             @csrf
             @method($method)
-            @if ($errors->any())
+             @if ($errors->any())
             <div class="alert alert-danger mt-3">
              <p class="fs-5"><i class="fa-solid fa-circle-exclamation"></i> Check Errors </p>
             </div>
-            @endif
+            @endif 
             <div class="mb-3 mt-3">
                 <label for="title" class="form-label font-weight-bold">Project  Title</label>
                 <input type="text" name="title" class="form-control   @error('title') is-invalid @enderror " id="title" value="{{ old('title') ??  $project->title }}" >

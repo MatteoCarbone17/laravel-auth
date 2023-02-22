@@ -15,20 +15,20 @@ class ProjectController extends Controller
 
     protected $validateRules =
     [
-        'title'=> 'required|min:5|max:150|unique:projects',
-        'author'=> 'min:3|max:50',
-        'content'=> 'required|min:3|max:1600',
+        'title'=> 'required|min:3|max:150|unique:projects',
+        // 'author'=> 'min:3|max:50',
+        'content'=> 'required|min:5|max:1600',
         'project_date_start'=>'required',
 
     ];
     protected $validateMessages = [
         'title.required'=>'Titolo obbligatorio',
-        'title.min' => 'Minimo 5 caratteri' ,
+        'title.min' => 'Minimo 3 caratteri' ,
         'title.max' => 'Limite massimo 50 caratteri' ,
-        'author.min' => 'Minimo 3 caratteri' ,
-        'author.max' => 'Limite massimo 50 caratteri' ,
+        // 'author.min' => 'Minimo 3 caratteri' ,
+        // 'author.max' => 'Limite massimo 50 caratteri' ,
         'content.required'=>'Contenuto obbligatorio',
-        'content.min' => 'Minimo 3 caratteri' ,
+        'content.min' => 'Minimo 5 caratteri' ,
         'content.max' => 'Limite massimo 1660 caratteri' ,
         'project_date_start.required'=>'Data inizio obbligatoria',
     ];
@@ -66,8 +66,9 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         
-        // dd($request->all());
-        $data = $request->validate([ $this->validateRules, $this->validateMessages ]);
+        // dd( $request);
+        $data =  $request->all();
+        $request->validate( $this->validateRules, $this->validateMessages );
         
          $data['author']=Auth::user()->name;
          $data['slug']=Str::slug($data['title']);
@@ -75,7 +76,7 @@ class ProjectController extends Controller
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
-        return redirect()->route('admin.projects.show',$newProject->id)->with('message', "Project $newProject->title has been created");
+        return redirect()->route('admin.projects.show',$newProject->id)->with('message', "Project $newProject->title has been created")->with('classMessage', "-succes");
         
     }
 
