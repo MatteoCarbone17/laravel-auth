@@ -4,6 +4,17 @@
 <div class="container">
   <div class="row">
     <div class="col">
+      <div class=" m-4">
+        @if (session('message'))
+        <div class=" alert alert{{session('classMessage')}}">
+          {{ (session('message')) }}
+        </div>
+        @endif
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
       <div class="card p-5">
         <div class="card-header d-flex  bg-success text-light justify-content-between p-3">
           <p>
@@ -13,7 +24,7 @@
               <i class="fa-solid fa-envelopes-bulk"></i>
           </span>
           <p>
-             User:  {{ Auth::user()['name'] }}
+            <a class="dropdown-item" href="{{ url('profile') }}"> {{ Auth::user()['name'] }}</a>
           </p>
       </div>
         <div class="card-body text-center">
@@ -28,6 +39,16 @@
                 @endif
                 <span> Slug: {{ $project->slug }} </span>
           </div>
+          <div class="col">
+            <div class="mt-3">
+              <a class="btn btn-warning"  href="{{ route('admin.projects.edit' ,  $project->id) }}" > Edit <i class="fa-solid fa-edit"></i> </a>
+                 <form class="d-inline-block delete double-confirm" action="{{ route('admin.projects.destroy' , $project->id) }}" method="POST" >
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger">Delete <i class="fa-solid fa-trash"></i></button> 
+                  </form>
+            </div>
+            </div>
           <div class="row mt-5">
             <div class="col-4">
               @if (isset($previousProject->id))
@@ -50,9 +71,13 @@
               @endif
             </div>
           </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+    @vite('resources/js/deleteButton.js')
 @endsection

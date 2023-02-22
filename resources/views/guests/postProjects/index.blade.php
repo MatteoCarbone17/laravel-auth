@@ -6,21 +6,25 @@
     <div class="row p-3">
         <div class="col">
             <div class="card p-1 border-5 ">
-                <div class="card-header d-flex  bg-success text-light justify-content-between p-3">
-                    <p>
-                        Author :  {{ $project->author }}
-                    </p>
+                <div class="card-header d-flex  bg-success text-light justify-content-center p-3">
                     <span>
+                        @if (isset(Auth::user()['name']))
                         <i class="fa-solid fa-envelopes-bulk"></i>
+                        @else
+                        <a class="nav-link" href="{{ route('login') }}"> <i class="fa-solid fa-envelopes-bulk"></i> </a>
+                        @endif
                     </span>
                     @isset(Auth::user()['name'])
                     <p>
-                       User:  {{ Auth::user()['name'] }}
+                        <a class="dropdown-item" href="{{ url('profile') }}"> {{ Auth::user()['name'] }}</a>
                     </p>
                     @endisset
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ $project->title }}</h5>
+                    <p>
+                        Author :  {{ $project->author }}
+                    </p>
                     <p class="card-text font-medium p-3 ">{{ $project->content }}</p>
                     <div class="card-footer p-2">
                         <span class="d-block">Data inizio : {{ $project->project_date_start }} </span>

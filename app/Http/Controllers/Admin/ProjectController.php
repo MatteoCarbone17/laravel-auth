@@ -76,7 +76,7 @@ class ProjectController extends Controller
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
-        return redirect()->route('admin.projects.show',$newProject->id)->with('message', "Project $newProject->title has been created")->with('classMessage', "-succes");
+        return redirect()->route('admin.projects.show',$newProject->id)->with('message', "Project \" $newProject->title \" has been Created")->with('classMessage', "-success");
         
     }
 
@@ -122,7 +122,7 @@ class ProjectController extends Controller
         $data = $request->validate( $newValidateRules,$this->validateMessages); 
         
         $project->update($data);
-        return redirect()->route('admin.projects.show',compact('project'));
+        return redirect()->route('admin.projects.show',compact('project'))->with('message', "Project \" $project->title \" has been edit")->with('classMessage', "-success");
     }
 
     /**

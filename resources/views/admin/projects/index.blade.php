@@ -18,14 +18,14 @@
               <th scope="col">Title</th>
               <th scope="col">Project date start</th>
               <th scope="col">Project date end</th>
-              <th scope="col" >Actions : <a class="mx-3 btn btn-primary btn-sm" href="{{ route('admin.projects.create') }}"> Add new Project <i class="fa-solid fa-plus"></i> </a> </th>
+              <th scope="col" >Actions <a class="mx-3 btn btn-primary btn-sm" href="{{ route('admin.projects.create') }}"> Add new Project <i class="fa-solid fa-plus"></i> </a> </th>
              
             </tr>
         </thead>
         <tbody>
             @foreach ($projects as $project)
                 
-            <tr>
+            <tr class="">
               <th scope="row">{{ $project->id}} </th>
               <td>{{ $project->title }}</td>
               <td>{{ $project->project_date_start }}</td>
