@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
   <div class="row">
-    @dump( $previousProject)
+    {{-- @dump( $previousProject) --}}
     <div class="col">
         <div class="card p-5">
             <div class="card-header p-3">

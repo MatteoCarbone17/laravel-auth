@@ -18,7 +18,7 @@
               <th scope="col">Title</th>
               <th scope="col">Project date start</th>
               <th scope="col">Project date end</th>
-              <th scope="col" >Actions : <a class="mx-3 btn btn-primary btn-sm" href="{{ route('admin.projects.create') }}"> Add new Project</a> </th>
+              <th scope="col" >Actions : <a class="mx-3 btn btn-primary btn-sm" href="{{ route('admin.projects.create') }}"> Add new Project <i class="fa-solid fa-plus"></i> </a> </th>
              
             </tr>
         </thead>
@@ -31,13 +31,12 @@
               <td>{{ $project->project_date_start }}</td>
               <td>{{ $project->project_date_end }}</td>
               <td>
-                <a class="btn btn-success"  href="{{ route('admin.projects.show' , $project->id) }}">Show</a>
-                <a class="btn btn-warning"  href="{{ route('admin.projects.edit' ,  $project->id) }}" >Edit</a>
+                <a class="btn btn-success"  href="{{ route('admin.projects.show' , $project->id) }}"><i class="fa-solid fa-eye"></i> </a>
+                <a class="btn btn-warning"  href="{{ route('admin.projects.edit' ,  $project->id) }}" ><i class="fa-solid fa-edit"></i> </a>
                <form class="d-inline-block" action="{{ route('admin.projects.destroy' , $project->id) }}" method="POST" >
                   @csrf
                   @method('DELETE')
-                  <button class="btn btn-danger">Delete</button> 
-                  
+                  <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button> 
                 </form> 
               </td>
             </tr>
