@@ -5,12 +5,36 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
+
+    protected $validateRules =
+    [
+        'title'=> 'required|min:5|max:150|unique:projects',
+        'author'=> 'min:3|max:50',
+        'content'=> 'required|min:3|max:1600',
+        'project_date_start'=>'required',
+
+    ];
+    protected $validateMessages = [
+        'title.required'=>'Titolo obbligatorio',
+        'title.min' => 'Minimo 5 caratteri' ,
+        'title.max' => 'Limite massimo 50 caratteri' ,
+        'author.min' => 'Minimo 3 caratteri' ,
+        'author.max' => 'Limite massimo 50 caratteri' ,
+        'content.required'=>'Contenuto obbligatorio',
+        'content.min' => 'Minimo 3 caratteri' ,
+        'content.max' => 'Limite massimo 1660 caratteri' ,
+        'project_date_start.required'=>'Data inizio obbligatoria',
+    ];
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -42,27 +66,11 @@ class ProjectController extends Controller
     {
         
         // dd($request->all());
-        $data = $request->validate([
-            
-            'title'=> 'required|min:5|max:150',
-            'author'=> 'min:3|max:50',
-            'content'=> 'required|min:3|max:1600',
-            'project_date_start'=>'required',
-        ],[
-            'title.required'=>'Titolo obbligatorio',
-            'title.min' => 'Minimo 5 caratteri' ,
-            'title.max' => 'Limite massimo 50 caratteri' ,
-            'author.min' => 'Minimo 3 caratteri' ,
-            'author.max' => 'Limite massimo 50 caratteri' ,
-            'content.required'=>'Contenuto obbligatorio',
-            'content.min' => 'Minimo 3 caratteri' ,
-            'content.max' => 'Limite massimo 1660 caratteri' ,
-            'project_date_start.required'=>'Data inizio obbligatoria',
-        ]); 
+        $data = $request->validate([ $this->validateRules, $this->validateMessages ]);
         
          $data['author']=Auth::user()->name;
          $data['slug']=Str::slug($data['title']);
-        //  $data['project_date_end']= ($data['project_date_start']);
+        //$data['project_date_end']= ($data['project_date_start']);
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
@@ -104,23 +112,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $data = $request->validate([
-            
-            'title'=> ['required', 'min:5','max:150'],
-            'author'=> 'min:3|max:50',
-            'content'=> 'required|min:3|max:1600',
-            'project_date_start'=>'required',
-        ],[
-            'title.required'=>'Titolo obbligatorio',
-            'title.min' => 'Minimo 5 caratteri' ,
-            'title.max' => 'Limite massimo 50 caratteri' ,
-            'author.min' => 'Minimo 3 caratteri' ,
-            'author.max' => 'Limite massimo 50 caratteri' ,
-            'content.required'=>'Contenuto obbligatorio',
-            'content.min' => 'Minimo 3 caratteri' ,
-            'content.max' => 'Limite massimo 1660 caratteri' ,
-            'project_date_start.required'=>'Data inizio obbligatoria',
-        ]); 
+
+        
+        $newValidateRules = $this->validateRules;
+        $newValidateRules['title'] = ['required','min:5','max:150',Rule::unique('projects')->ignore($project->id)];
+
+        $data = $request->validate( $newValidateRules,$this->validateMessages); 
         
         $project->update($data);
         return redirect()->route('admin.projects.show',compact('project'));
