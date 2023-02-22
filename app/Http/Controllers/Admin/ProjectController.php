@@ -78,7 +78,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.projects.show',compact('project') );
+        $nextProject = Project::where('id', '>' , $project->id)->first(); 
+        $previousProject = Project::where('id', '<' , $project->id)->orderBy('id','DESC')->first();
+        return view('admin.projects.show',compact('project','nextProject','previousProject') );
     }
 
     /**
