@@ -28,7 +28,7 @@ class ProjectSeeder extends Seeder
             $newProject->content =$faker->realTextBetween(500,900);
             $newProject->project_date_start =$faker->date();
             $newProject->project_date_end =$faker->date();
-            $newProject->image ='imgs/landscape.jpg';
+            $newProject->image ='landscape.jpg';
             $newProject->save();
         }
     }

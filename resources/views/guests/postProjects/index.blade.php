@@ -25,6 +25,9 @@
                     <p>
                         Author :  {{ $project->author }}
                     </p>
+                    <div class="card-img mt-2 mb-2">
+                        <img src="{{ asset('storage/imgs/'. $project->image) }}" class="img-fluid" alt="">
+                    </div>
                     <p class="card-text rounded-4  font-medium p-3 ">{{ $project->content }}</p>
                     <div class="card-footer p-2">
                         <span class="d-block">Data inizio : {{ $project->project_date_start }} </span>

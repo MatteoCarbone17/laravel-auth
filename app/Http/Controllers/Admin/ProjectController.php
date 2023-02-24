@@ -16,25 +16,25 @@ class ProjectController extends Controller
 
     protected $validateRules =
     [
-        'title'=> 'required|min:3|max:150|unique:projects',
+        'title' => 'required|min:3|max:150|unique:projects',
         // 'author'=> 'min:3|max:50',
-        'content'=> 'required|min:5|max:1600',
-        'project_date_start'=>'required',
-        'image'=>'required|image'
+        'content' => 'required|min:5|max:1600',
+        'project_date_start' => 'required',
+        'image' => 'required|image'
 
     ];
     protected $validateMessages = [
-        'title.required'=>'Titolo obbligatorio',
-        'title.min' => 'Minimo 3 caratteri' ,
-        'title.max' => 'Limite massimo 50 caratteri' ,
+        'title.required' => 'Titolo obbligatorio',
+        'title.min' => 'Minimo 3 caratteri',
+        'title.max' => 'Limite massimo 50 caratteri',
         // 'author.min' => 'Minimo 3 caratteri' ,
         // 'author.max' => 'Limite massimo 50 caratteri' ,
-        'content.required'=>'Contenuto obbligatorio',
-        'content.min' => 'Minimo 5 caratteri' ,
-        'content.max' => 'Limite massimo 1660 caratteri' ,
-        'project_date_start.required'=>'Data inizio obbligatoria',
-        'image.require'=>'immagine necessaria',
-        'image.image'=>'Controlla che sia un immagine'
+        'content.required' => 'Contenuto obbligatorio',
+        'content.min' => 'Minimo 5 caratteri',
+        'content.max' => 'Limite massimo 1660 caratteri',
+        'project_date_start.required' => 'Data inizio obbligatoria',
+        'image.require' => 'immagine necessaria',
+        'image.image' => 'Controlla che sia un immagine'
     ];
 
 
@@ -48,7 +48,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::paginate(25);
-        return view('admin.projects.index', compact('projects') );
+        return view('admin.projects.index', compact('projects'));
     }
 
     /**
@@ -69,20 +69,19 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         //  dd( $request->all());
         $data =  $request->all();
-        $request->validate( $this->validateRules, $this->validateMessages );
-        
-         $data['author']=Auth::user()->name;
-         $data['slug']=Str::slug($data['title']);
-         $data['image']=Storage::put('uploads',$data['image']);
+        $request->validate($this->validateRules, $this->validateMessages);
+
+        $data['author'] = Auth::user()->name;
+        $data['slug'] = Str::slug($data['title']);
+        $data['image'] = Storage::put('imgs/', $data['image']);
         //$data['project_date_end']= ($data['project_date_start']);
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
-        return redirect()->route('admin.projects.show',$newProject->id)->with('message', "Project \" $newProject->title \" has been Created")->with('classMessage', "-success");
-        
+        return redirect()->route('admin.projects.show', $newProject->id)->with('message', "Project \" $newProject->title \" has been Created")->with('classMessage', "-success");
     }
 
     /**
@@ -95,9 +94,9 @@ class ProjectController extends Controller
     {
         //dd($project);
         // $projects = Project::paginate();
-         $nextProject = Project::where('id', '>' , $project->id)->first();
-         $previousProject = Project::where('id', '<' , $project->id)->orderBy('id','DESC')->first();
-        return view('admin.projects.show',compact('project','nextProject','previousProject') );
+        $nextProject = Project::where('id', '>', $project->id)->first();
+        $previousProject = Project::where('id', '<', $project->id)->orderBy('id', 'DESC')->first();
+        return view('admin.projects.show', compact('project', 'nextProject', 'previousProject'));
     }
 
     /**
@@ -108,7 +107,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-       return view('admin.projects.edit',compact('project') );
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
@@ -121,14 +120,14 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
 
-        
-        $newValidateRules = $this->validateRules;
-        $newValidateRules['title'] = ['required','min:5','max:150',Rule::unique('projects')->ignore($project->id)];
 
-        $data = $request->validate( $newValidateRules,$this->validateMessages); 
-        
+        $newValidateRules = $this->validateRules;
+        $newValidateRules['title'] = ['required', 'min:5', 'max:150', Rule::unique('projects')->ignore($project->id)];
+
+        $data = $request->validate($newValidateRules, $this->validateMessages);
+
         $project->update($data);
-        return redirect()->route('admin.projects.show',compact('project'))->with('message', "Project \" $project->title \" has been edit")->with('classMessage', "-success");
+        return redirect()->route('admin.projects.show', compact('project'))->with('message', "Project \" $project->title \" has been edit")->with('classMessage', "-success");
     }
 
     /**
@@ -142,6 +141,4 @@ class ProjectController extends Controller
         $project->delete();
         return redirect()->route('admin.projects.index')->with('message', "Project \" $project->title \" has been deleted")->with('classMessage', "-danger");
     }
-    
 }
-
