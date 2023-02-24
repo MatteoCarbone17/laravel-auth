@@ -8,6 +8,7 @@ use App\Models\Project;
 //  Illuminate\Contracts\Validation\Rule ------>  da problemi con Rule::unique
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -19,6 +20,7 @@ class ProjectController extends Controller
         // 'author'=> 'min:3|max:50',
         'content'=> 'required|min:5|max:1600',
         'project_date_start'=>'required',
+        'image'=>'required|image'
 
     ];
     protected $validateMessages = [
@@ -31,6 +33,8 @@ class ProjectController extends Controller
         'content.min' => 'Minimo 5 caratteri' ,
         'content.max' => 'Limite massimo 1660 caratteri' ,
         'project_date_start.required'=>'Data inizio obbligatoria',
+        'image.require'=>'immagine necessaria',
+        'image.image'=>'Controlla che sia un immagine'
     ];
 
 
@@ -72,6 +76,7 @@ class ProjectController extends Controller
         
          $data['author']=Auth::user()->name;
          $data['slug']=Str::slug($data['title']);
+         $data['image']=Storage::put('uploads',$data['image']);
         //$data['project_date_end']= ($data['project_date_start']);
         $newProject = new Project();
         $newProject->fill($data);
@@ -88,6 +93,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        //dd($project);
         // $projects = Project::paginate();
          $nextProject = Project::where('id', '>' , $project->id)->first();
          $previousProject = Project::where('id', '<' , $project->id)->orderBy('id','DESC')->first();

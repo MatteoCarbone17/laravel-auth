@@ -29,6 +29,9 @@
       </div>
         <div class="card-body  rounded-4 text-center">
           <h5 class="card-title">{{ $project->title }}</h5>
+           <div class="card-img">
+            <img src="{{ asset('storage/'.  $project->image) }}" class="img-fluid" alt="">
+          </div> 
           <p class="card-text p-3">{{ $project->content }}</p>
           <div class="card-footer  rounded-4 p-3">
                 <span class="d-block">Data inizio : {{ $project->project_date_start }} </span>

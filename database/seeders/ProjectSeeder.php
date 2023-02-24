@@ -7,6 +7,8 @@ use Faker\Generator as Faker;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class ProjectSeeder extends Seeder
@@ -18,7 +20,7 @@ class ProjectSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for ($i=0; $i < 100; $i++) { 
+        for ($i=0; $i < 50; $i++) { 
             $newProject = new Project();
             $newProject->title = $faker->unique()->realTextBetween(5,10);
             $newProject->author =$faker->realTextBetween(3,10);
@@ -26,6 +28,7 @@ class ProjectSeeder extends Seeder
             $newProject->content =$faker->realTextBetween(500,900);
             $newProject->project_date_start =$faker->date();
             $newProject->project_date_end =$faker->date();
+            $newProject->image ='imgs/landscape.jpg';
             $newProject->save();
         }
     }
